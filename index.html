@@ -86,6 +86,7 @@
 
 <script>
   var ruleCount = 1;
+  var ruleParamCount = 1;
   $(document).ready(function () {
 
     //on first time load
@@ -133,18 +134,15 @@
 
     // OnClick Add Rule Parameter
     $(document).on("click", '.addRuleParamText', function () {
-
-      var dynamicId = $(this).parent().parent().attr('id');
-      if (typeof dynamicId === 'undefined') {
-        dynamicId = $(this).parent().parent().parent().attr('id');
-      }
+      ruleParamCount++;
+      var dynamicId = $(this).parent().parent().parent().attr('id');
       $(`#${dynamicId} .checkPrevious`).prev().css("color", "red");
       $(`#${dynamicId} .checkPrevious`).prev().removeClass("addRuleParamText");
       $(`#${dynamicId} .checkPrevious`).prev().addClass("removeRuleParamText");
       $(`#${dynamicId} .checkPrevious`).prev().text("remove rule");
       // //Append New Input Field
       $(`#${dynamicId}`).append(`
-      <div class="dynamicRuleParameter">
+      <div class="dynamicRuleParameter" id="dynamicRuleParameter${ruleParamCount}">
         <div class="col-xs-2"></div><div class="col-xs-2"></div>
         <div class="col-xs-7 add-rule-param-div">
             <input class="form-control input-sm"  type="text" placeholder="insert parameter">
@@ -156,24 +154,19 @@
     //OnClick Remove Rule Parameter
     $(document).on("click", ".removeRuleParamText", function () {
 
-
-      // $(this).parent().parent().remove();
-
+      var dynamicParamId = $(this).parent().parent().attr('id');
+      $(`#${dynamicParamId}`).remove();
+      
       var dynamicId = $(this).parent().parent().parent().attr('id');
       var numItems = $(`#${dynamicId} .dynamicRuleParameter`).length;
-      if (numItems == 2) {
+
+      if(typeof dynamicParamId==='undefined' && numItems==2)
+      {
         $(`#${dynamicId} .checkPrevious`).prev().text("add rule");
         $(`#${dynamicId} .checkPrevious`).prev().css("color", "#46b8da");
         $(`#${dynamicId} .checkPrevious`).prev().addClass("addRuleParamText");
         $(`#${dynamicId} .checkPrevious`).prev().removeClass("removeRuleParamText");
         $(`#${dynamicId} .dynamicRuleParameter`).eq(1).remove();
-      }
-      else {
-        $(`#${dynamicId} .dynamicRuleParameter`).last().remove();
-        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().css("color", "#46b8da");
-        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().addClass("addRuleParamText");
-        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().removeClass("removeRuleParamText");
-        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().text("add rule");
       }
     });
 
