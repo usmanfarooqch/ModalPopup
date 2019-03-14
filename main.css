@@ -1,0 +1,42 @@
+.center-elements {
+    text-align: center;
+}
+.dynamic-div{
+    background: #cec7c7;
+    padding: 4px;
+    border-color: #bfb5b5;
+    border-style: solid;
+    border-width: 1px 0px 1px 0px;
+}
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.add-rule-param-div{
+   position: relative
+}
+.add-rule-param-div .add-rule-param-text {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    z-index: 1;
+    color: #46b8da;
+    margin-top: -10px;
+    cursor: pointer;
+    transition: .3s ease all;
+}
+.add-rule-param-div .add-rule-param-text:hover{
+   color: #333333;
+}
+.field-icon {
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    color: #b1b1b1;
+}

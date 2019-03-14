@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./main.css" />
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="center-elements">
+      <h2>Involve Asia</h2>
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Click Me</button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+
+      <!-- Large Modal -->
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add Revenue Group</h4>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body">
+
+            <!-- Revenue Group Title (Plain Text Box)-->
+            <div class="form-group">
+              <label for="inputsm">Revenue Group Title</label>
+              <input class="form-control input-sm" id="inputsm" type="text">
+            </div>
+
+            <!-- Drop Down -->
+            <div class="form-group">
+              <div class="form-inline">
+                <label>If &nbsp;</label>
+                <select id="Company" class="form-control" name="Company">
+                  <option value="small">ALL</option>
+                  <option value="medium">medium</option>
+                  <option value="large">large</option>
+                </select>
+                <label>&nbsp; of the bellow conditions are met</label>
+              </div>
+            </div>
+
+            <!-- Add Rule -->
+            <div class="form-group">
+              <div id="addRule"></div>
+            </div>
+
+            <!-- Input Numaric  -->
+            <div class="form-group">
+              <div class="form-inline">
+                <label>then revenue is &nbsp;</label>
+                <input class="form-control form-controll" type="number">
+                <span class="field-icon">%</span>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning pull-left" data-dismiss="modal">Confirm</button>
+            <button type="button" class="btn pull-left" data-dismiss="modal">Cancel</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  var ruleCount = 1;
+  $(document).ready(function () {
+
+    //on first time load
+    addRule(ruleCount);
+
+    // Add Dynamically rule 
+    function addRule(ruleCount) {
+      $('#addRule').append(
+        `<div class="row dynamic-div" id="dynamicDiv${ruleCount}">
+                  <div class="col-xs-2">
+                    <select id="Company" class="form-control" name="Company">
+                      <option value="small">aff_sub</option>
+                      <option value="medium">medium</option>
+                      <option value="large">large</option>
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
+                    <select id="Company" class="form-control" name="Company">
+                      <option value="small">ls</option>
+                      <option value="medium">medium</option>
+                      <option value="large">large</option>
+                    </select>
+                  </div>
+                  <div class="dynamicRuleParameter">
+                  <div class="col-xs-7 add-rule-param-div">
+                    <input class="form-control input-sm" type="text" >
+                    <span class="add-rule-param-text addRuleParamText">add rule</span>
+                    <span class="checkPrevious"><span>
+                  </div>
+                  </div>
+                  <div class="col-xs-1">
+                    <div class="row">
+                      <button type="button" class="btn btn-default btn-circle btnRemoveRule"><i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-default btn-circle btnAddRule"><i class="fa fa-plus"></i>
+                    </div>
+                  </div>
+                </div>`)
+
+    }
+
+    //Remove Dynamic Rule
+    function removeRule(ruleCount) {
+      $(`#dynamicDiv${ruleCount}`).remove();
+    }
+
+    // OnClick Add Rule Parameter
+    $(document).on("click", '.addRuleParamText', function () {
+
+      var dynamicId = $(this).parent().parent().attr('id');
+      if (typeof dynamicId === 'undefined') {
+        dynamicId = $(this).parent().parent().parent().attr('id');
+      }
+      $(`#${dynamicId} .checkPrevious`).prev().css("color", "red");
+      $(`#${dynamicId} .checkPrevious`).prev().removeClass("addRuleParamText");
+      $(`#${dynamicId} .checkPrevious`).prev().addClass("removeRuleParamText");
+      $(`#${dynamicId} .checkPrevious`).prev().text("remove rule");
+      // //Append New Input Field
+      $(`#${dynamicId}`).append(`
+      <div class="dynamicRuleParameter">
+        <div class="col-xs-2"></div><div class="col-xs-2"></div>
+        <div class="col-xs-7 add-rule-param-div">
+            <input class="form-control input-sm" type="text">
+            <span class="add-rule-param-text addRuleParamText">add rule</span>
+            <span class="checkPrevious"><span>
+        </div></div>`)
+    });
+
+    //OnClick Remove Rule Parameter
+    $(document).on("click", ".removeRuleParamText", function () {
+
+      var dynamicId = $(this).parent().parent().parent().attr('id');
+      var numItems = $(`#${dynamicId} .dynamicRuleParameter`).length;
+      if (numItems == 2) {
+        $(`#${dynamicId} .checkPrevious`).prev().text("add rule");
+        $(`#${dynamicId} .checkPrevious`).prev().css("color", "#46b8da");
+        $(`#${dynamicId} .checkPrevious`).prev().addClass("addRuleParamText");
+        $(`#${dynamicId} .checkPrevious`).prev().removeClass("removeRuleParamText");
+        $(`#${dynamicId} .dynamicRuleParameter`).eq(1).remove();
+      }
+      else {
+        $(`#${dynamicId} .dynamicRuleParameter`).last().remove();
+        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().css("color", "#46b8da");
+        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().addClass("addRuleParamText");
+        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().removeClass("removeRuleParamText");
+        $(`#${dynamicId} .dynamicRuleParameter .add-rule-param-text`).last().text("add rule");
+      }
+    });
+
+
+    // //Add Main Rule
+    $(document).on("click", `.btnAddRule`, function () {
+      ruleCount++;
+      addRule(ruleCount);
+    });
+
+    // //Remove Main Rule
+    $(document).on("click", `.btnRemoveRule`, function () {
+      if (ruleCount > 1) {
+        removeRule(ruleCount);
+        ruleCount--;
+      }
+    });
+
+
+  });
+
+</script>
+
+</html>
