@@ -39,7 +39,7 @@
             <!-- Revenue Group Title (Plain Text Box)-->
             <div class="form-group">
               <label for="inputsm">Revenue Group Title</label>
-              <input class="form-control input-sm" id="inputsm" type="text">
+              <input class="form-control input-sm" value="Fashion - 15%" id="inputsm" type="text">
             </div>
 
             <!-- Drop Down -->
@@ -64,7 +64,7 @@
             <div class="form-group">
               <div class="form-inline">
                 <label>then revenue is &nbsp;</label>
-                <input class="form-control form-controll" type="number">
+                <input class="form-control form-controll" value="15" type="number">
                 <span class="field-icon">%</span>
 
               </div>
@@ -111,7 +111,7 @@
                   </div>
                   <div class="dynamicRuleParameter">
                   <div class="col-xs-7 add-rule-param-div">
-                    <input class="form-control input-sm" type="text" >
+                    <input class="form-control input-sm" type="text" placeholder="insert parameter">
                     <span class="add-rule-param-text addRuleParamText">add rule</span>
                     <span class="checkPrevious"><span>
                   </div>
@@ -147,14 +147,17 @@
       <div class="dynamicRuleParameter">
         <div class="col-xs-2"></div><div class="col-xs-2"></div>
         <div class="col-xs-7 add-rule-param-div">
-            <input class="form-control input-sm" type="text">
-            <span class="add-rule-param-text addRuleParamText">add rule</span>
+            <input class="form-control input-sm"  type="text" placeholder="insert parameter">
+            <span class="add-rule-param-text addRuleParamText" >add rule</span>
             <span class="checkPrevious"><span>
         </div></div>`)
     });
 
     //OnClick Remove Rule Parameter
     $(document).on("click", ".removeRuleParamText", function () {
+
+
+      // $(this).parent().parent().remove();
 
       var dynamicId = $(this).parent().parent().parent().attr('id');
       var numItems = $(`#${dynamicId} .dynamicRuleParameter`).length;
@@ -183,10 +186,11 @@
 
     // //Remove Main Rule
     $(document).on("click", `.btnRemoveRule`, function () {
-      if (ruleCount > 1) {
-        removeRule(ruleCount);
-        ruleCount--;
-      }
+      var currentId = $(this).parent().parent().parent().attr('id');
+      var count = $(`#addRule .dynamic-div`).length;
+      if(count!=1)
+      {$(`#${currentId}`).remove();}
+
     });
 
 
